@@ -62,7 +62,7 @@ enum ResultCode {
   ErrorUserAlreadyExists = 102;
   ErrorUserInvalidName = 103;
   ErrorUserDuplicatedLogin = 104;
-  ErrorUserTokenInvalid = 105;
+  ErrorUserInvalidToken = 105;
   ErrorInvalidGameRoom = 106;
 
   ErrorSystem = 200;
@@ -142,7 +142,6 @@ message ReqRandomJoin {
 }
 
 message RspRandomJoin {
-
 }
 
 message RspInternalServerError {
@@ -152,6 +151,8 @@ message RspGameOver {
     optional uint64 winner = 1;
     optional uint32 my_score = 2;
     optional uint32 opponent_score = 3;
+    optional User user = 4;
+    optional User opponent = 5;
 }
 
 // Request //////////////////////////////////////////////////////////////////////////////////
