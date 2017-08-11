@@ -1,0 +1,201 @@
+//package othello;
+syntax = "proto2";
+
+enum ProtocolVersion {
+  option allow_alias = true;
+
+  V_0 = 0;
+  V_1 = 1;
+  V_LATEST = 1;
+}
+
+enum BoardItemType {
+    Empty = 0;
+    Black = 1;
+    White = 2;
+}
+
+message User {
+  optional uint64 id = 1;
+  optional string name = 2;
+  optional uint32 level = 3;
+  optional uint32 exp = 4;
+  optional uint32 win = 5;
+  optional uint32 lose = 6;
+  optional uint32 gold = 7;
+}
+
+message UserCache {
+  optional string token = 1;
+  optional uint32 joined_room = 2;
+}
+
+message GameRoom {
+  enum GameRoomStatus {
+    WAITING = 0;
+    TURN_USER1 = 1;
+    TURN_USER2 = 2;
+    GAME_OVER = 3;
+    TIMEOUT = 4;
+  }
+  optional uint64 room_id = 1;
+  optional uint64 user_1 = 2;
+  optional uint64 user_2 = 3;
+  optional GameRoomStatus status = 4;
+  repeated BoardItemType board = 5;
+  optional uint64 updated = 6;
+  optional uint64 created = 7;
+}
+
+enum PlatformType {
+  UNKNOWN = 0;
+  CUSTOM = 1;
+  GAME_CENTER = 2;
+  GOOGLE_PLAY = 3;
+  FACEBOOK = 4;
+}
+
+enum ResultCode {
+  Success = 0;
+  ErrorUserNotRegistered = 100;
+  ErrorUserNameAlreadyExists = 101;
+  ErrorUserAlreadyExists = 102;
+  ErrorUserInvalidName = 103;
+  ErrorUserDuplicatedLogin = 104;
+  ErrorUserTokenInvalid = 105;
+  ErrorInvalidGameRoom = 106;
+
+  ErrorSystem = 200;
+  ErrorInvalidProtocolVersion = 201;
+}
+
+message Result {
+  optional ResultCode code = 1;
+  optional string message = 2;
+}
+
+message ReqLogin {
+    optional PlatformType platform_type = 1;
+    optional string platform_token = 2;
+}
+
+message RspLogin {
+    optional User user = 1;
+    optional string platform_token = 2;
+    optional string token = 3;
+}
+
+message ReqRegister {
+    optional PlatformType platform_type = 1;
+    optional string platform_token = 2;
+    optional string name = 3;
+}
+
+message RspRegister {
+    optional User user = 1;
+    optional string platform_token = 2;
+}
+
+message ReqCreateGameRoom {
+
+}
+
+message RspCreateGameRoom {
+    optional GameRoom room = 1;
+}
+
+message ReqExitGameRoom {
+    optional uint64 room_id = 1;
+}
+
+message RspExitGameRoom {
+}
+
+message ReqGamePut {
+    optional uint64 room_id = 1;
+    optional uint32 r = 2;
+    optional uint32 c = 3;
+}
+
+message RspGamePut {
+}
+
+message ReqGameSync {
+    optional uint64 room_id = 1;
+}
+
+message RspGameSync {
+    optional GameRoom room = 1;
+    optional User opponent = 2;
+}
+
+message ReqJoinGameRoom {
+    optional uint64 room_id = 1;
+}
+
+message RspJoinGameRoom {
+    optional GameRoom room = 1;
+    optional User opponent = 2;
+}
+
+message ReqRandomJoin {
+}
+
+message RspRandomJoin {
+
+}
+
+message RspInternalServerError {
+}
+
+message RspGameOver {
+    optional uint64 winner = 1;
+    optional uint32 my_score = 2;
+    optional uint32 opponent_score = 3;
+}
+
+// Request //////////////////////////////////////////////////////////////////////////////////
+message Request {
+  optional uint32 protocolVersion = 1;
+  optional int32 protocolId = 2;
+  optional uint32 seqNo = 3;
+  optional string token = 4;
+
+  optional ReqLogin loginReq = 100;
+  optional ReqRegister registerReq = 101;
+  optional ReqCreateGameRoom makeGameRoomReq = 102;
+  optional ReqExitGameRoom exitGameRoomReq = 103;
+  optional ReqGamePut gamePutReq = 104;
+  optional ReqGameSync gameSyncReq = 105;
+  optional ReqJoinGameRoom joinGameRoomReq = 106;
+  optional ReqRandomJoin randomJoinReq = 107;
+}
+
+
+// Response //////////////////////////////////////////////////////////////////////////////////
+message Response
+{
+  optional uint32 protocolVersion = 1;
+  optional int32 protocolId = 2;
+  optional Result result = 3;
+  optional uint32 reqSeqNo = 5;
+
+  optional RspLogin loginRsp = 100;
+  optional RspRegister registerRsp = 101;
+  optional RspCreateGameRoom makeGameRoomRsp = 102;
+  optional RspExitGameRoom exitGameRoomRsp = 103;
+  optional RspGamePut gamePutRsp = 104;
+  optional RspGameSync gameSyncRsp = 105;
+  optional RspJoinGameRoom joinGameRoomRsp = 106;
+  optional RspGameOver gameOverRsp = 107;
+  optional RspRandomJoin randomJoinRsp = 108;
+
+  optional RspInternalServerError internalServerErrorRsp = 200;
+}
+
+message MultipleResponse
+{
+  optional uint32 reqSeqNo = 1;
+  repeated Response responses = 10;
+}
+
