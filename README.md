@@ -14,6 +14,10 @@ $ python test_client.py [user_uuid] [user_name]
 ## 전략 코드 작성하는 곳
 - Dispatcher class 의 GamePut 함수를 수정하여 전략이나 간단한 bot 을 구현할 수 있음
 
+## 파이콘 행사기간 동안(2017.8.12 ~ 2017.8.15)
+- user_uuid 를 본인 email을 포함하여 실행하시면 자동 응모가 됩니다.
+- 응모해주신 분들중 exp 가 높은 분들께는 선물을 드립니다. 
+
 ## 그 외 플레이가 실제 가능한 클라이언트
 - PlayStore 에서 `오셀로 PyCon` 으로 검색하면 설치 가능
 - [PlayStore Link](https://play.google.com/store/apps/details?id=kr.co.nnngomstudio.othello.googlemarket)
