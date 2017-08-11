@@ -5,6 +5,7 @@
 
 ## 실행 방법
 ```
+$ pip install protobuf
 $ python test_client.py [user_uuid] [user_name]
 ```
 - 참고로 user_uuid 로 별도 password 없이 로그인 되는 방식이므로 잘 정해서 입력해야 함
