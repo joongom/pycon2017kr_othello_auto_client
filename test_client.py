@@ -86,7 +86,7 @@ class Dispatcher:
                 platform_token=client.user_platform_token
             ))
         else:
-            raise Exception(str(result.code))
+            raise Exception(othello_pb2.ResultCode.Name(result.code))
 
     def RspJoinGameRoom(self, result, rsp):
         if result.code == othello_pb2.Success:
