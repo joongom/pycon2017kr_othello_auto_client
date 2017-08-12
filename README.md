@@ -19,6 +19,6 @@ $ python test_client.py [user_uuid] [user_name]
 - 응모해주신 분들중 exp 가 높은 분들께는 선물을 드립니다. 
 
 ## 그 외 플레이가 실제 가능한 클라이언트
-- PlayStore 에서 `오셀로 PyCon` 으로 검색하면 설치 가능
+- PlayStore 에서 `준곰오델로` 로 검색하면 설치 가능
 - [PlayStore Link](https://play.google.com/store/apps/details?id=kr.co.nnngomstudio.othello.googlemarket)
 
